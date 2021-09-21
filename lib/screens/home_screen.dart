@@ -31,9 +31,8 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
   }
 
+  // Check and request permission
   Future start() async {
-    // Check and request permission
-
     await Permission.microphone.request();
     await Permission.storage.request();
     await Permission.manageExternalStorage.request();
@@ -59,7 +58,6 @@ class _HomeScreenState extends State<HomeScreen> {
   void delete() {
     final dir = Directory(filePath);
     dir.deleteSync(recursive: true);
-    const SnackBar(content: Text('successfully deleted'));
   }
 
   //audio play method
@@ -171,16 +169,23 @@ class _HomeScreenState extends State<HomeScreen> {
             //         : const Icon(Icons.pause),
             //   ),
             // ),
-            IconButton(
-              onPressed: () {
-                setState(() {
-                  _record = !_record;
-                });
-                _record == true ? startRecord() : stopRecord();
-              },
-              icon: _record == false
-                  ? const Icon(Icons.mic)
-                  : const Icon(Icons.pause),
+            Container(
+              height: h / 15,
+              width: w / 8,
+              decoration: BoxDecoration(
+                  color: Colors.amber,
+                  borderRadius: BorderRadius.circular(40.0)),
+              child: IconButton(
+                onPressed: () {
+                  setState(() {
+                    _record = !_record;
+                  });
+                  _record == true ? startRecord() : stopRecord();
+                },
+                icon: _record == false
+                    ? const Icon(Icons.mic)
+                    : const Icon(Icons.pause),
+              ),
             ),
             const SizedBox(
               height: 20,
